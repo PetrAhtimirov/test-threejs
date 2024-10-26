@@ -8,10 +8,9 @@ import {
     PlaneGeometry,
     Color,
     DirectionalLight,
-    PointLight,
     SpotLight
 } from 'three';
-import { camera, initializeControls, handleKeyPressCamera } from './camera.js';
+import {camera, initializeControls, handleKeyPressCamera} from './camera.js';
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import catModel from './models/oiiaioooooiai_cat.glb'; // Убедитесь, что путь правильный
 
@@ -80,7 +79,6 @@ const animate = () => {
     if (model) {
         model.rotation.y += 0.01; // Вращаем модель вокруг оси Y
     }
-
     renderer.render(scene, camera);
 };
 

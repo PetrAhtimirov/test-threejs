@@ -47,10 +47,10 @@ export function handleKeyPressCamera(event) {
     }
 }
 
-export function updateCameraPosition() {
-    camera.position.lerp(targetPosition, 0.1);
-    if (controls) {
-        controls.update();
-    }
-}
-updateCameraPosition();
+// export function updateCameraPosition() {
+//     camera.position.lerp(targetPosition, 0.1);
+//     if (controls) {
+//         controls.update();
+//     }
+// }
+// updateCameraPosition();
