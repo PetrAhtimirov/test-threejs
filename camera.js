@@ -6,7 +6,8 @@ const targetPosition = camera.position.clone();
 let controls;
 
 export function setDefaultCameraPosition() {
-    camera.position.set(0, 0, 5);
+    camera.position.set(0, 1, 5);
+    camera.rotation.x = 0.2;
 }
 setDefaultCameraPosition();
 
