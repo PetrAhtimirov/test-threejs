@@ -1,11 +1,24 @@
-import { Scene, WebGLRenderer, BoxGeometry, MeshBasicMaterial, Mesh, AmbientLight, PlaneGeometry, Color } from 'three';
+import {
+    Scene,
+    WebGLRenderer,
+    BoxGeometry,
+    MeshBasicMaterial,
+    Mesh,
+    AmbientLight,
+    PlaneGeometry,
+    Color,
+    DirectionalLight,
+    PointLight,
+    SpotLight
+} from 'three';
 import { camera, initializeControls, handleKeyPressCamera } from './camera.js';
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
-// Создание сцены
+// Инициализация сцены
 const scene = new Scene();
 scene.background = new Color(0xececec);
 
-// Создание рендерера
+// Инициализация рендерера
 const renderer = new WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
@@ -13,31 +26,61 @@ document.body.appendChild(renderer.domElement);
 // Инициализация контроллеров
 initializeControls(renderer.domElement);
 
-// Создание куба
-const geometry = new BoxGeometry(1, 1, 1); // Размеры куба
-const material = new MeshBasicMaterial({ color: 0x00ff00 }); // Цвет куба
-const cube = new Mesh(geometry, material); // Создание меша
-cube.position.y = 1;
-scene.add(cube); // Добавление куба в сцену
-
 // Создание пола
-const floorGeometry = new PlaneGeometry(100, 100); // Размеры пола
-const floorMaterial = new MeshBasicMaterial({ color: 0xadbea9, side: 2 }); // Цвет пола
-const floor = new Mesh(floorGeometry, floorMaterial); // Создание меша для пола
-floor.rotation.x = - Math.PI / 2; // Поворот пола, чтобы он был горизонтальным
-scene.add(floor); // Добавление пола в сцену
+const createFloor = () => {
+    const floorGeometry = new PlaneGeometry(100, 100);
+    const floorMaterial = new MeshBasicMaterial({ color: 0xadbea9, side: 2 });
+    const floor = new Mesh(floorGeometry, floorMaterial);
+    floor.rotation.x = -Math.PI / 2;
+    scene.add(floor);
+};
 
-// Освещение
-var light = new AmbientLight(0x404040); // мягкий белый свет
-scene.add(light);
+// Загрузка модели
+let catModel;
+const loadModel = () => {
+    const loader = new GLTFLoader();
+    loader.load('models/oiiaioooooiai_cat.glb', (gltf) => {
+        catModel = gltf.scene;
+        catModel.scale.set(2, 2, 2);
+        catModel.position.set(0, 0, 0);
+        scene.add(catModel);
+    }, undefined, (error) => {
+        console.error(error);
+    });
+};
+
+// Добавление освещения
+const addLights = () => {
+    const ambientLight = new AmbientLight(0x404040);
+    scene.add(ambientLight);
+
+    const directionalLight = new DirectionalLight(0xffffff, 1);
+    directionalLight.position.set(5, 10, 7.5);
+    scene.add(directionalLight);
+
+    const pointLight1 = new PointLight(0xffffff, 1, 100);
+    pointLight1.position.set(0, 10, 0);
+    scene.add(pointLight1);
+
+    const pointLight2 = new PointLight(0xff0000, 1, 100); // Красный свет
+    pointLight2.position.set(-10, 5, 10);
+    scene.add(pointLight2);
+
+    const spotLight = new SpotLight(0xffffff, 1);
+    spotLight.position.set(10, 10, 10);
+    spotLight.angle = Math.PI / 4;
+    spotLight.penumbra = 0.2;
+    scene.add(spotLight);
+};
 
 // Функция анимации
-function animate() {
-    cube.rotation.x += 0.01;
-    cube.rotation.y += 0.01;
+const animate = () => {
+    if (catModel) {
+        catModel.rotation.y += 0.003;
+    }
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
-}
+};
 
 // Обработка изменения размера окна
 window.addEventListener('resize', () => {
@@ -49,5 +92,8 @@ window.addEventListener('resize', () => {
 // Обработка нажатий клавиш
 window.addEventListener('keydown', handleKeyPressCamera);
 
-// Запуск анимации
+// Инициализация сцены
+createFloor();
+loadModel();
+addLights();
 animate();
