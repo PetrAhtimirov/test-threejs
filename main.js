@@ -237,12 +237,27 @@ grass.castShadow = true;  // Травинки отбрасывают тени
 grass.receiveShadow = true;  // Травинки могут принимать тени
 scene.add(grass);
 
+// Функция, чтобы получить высоту рельефа в текущем положении камеры
+function getTerrainHeightAtCameraPosition(cameraPosition) {
+    const x = cameraPosition.x;
+    const z = cameraPosition.z;
+    return getYPosition(x, z);  // Используем вашу функцию для вычисления высоты
+}
+
 // Основной цикл рендера
 let time = 0;
 const animate = () => {
     stats.begin();
     time += 0.01;
     material.uniforms.time.value = time;
+
+    // Проверка положения камеры и корректировка по высоте рельефа
+    const terrainHeight = getTerrainHeightAtCameraPosition(camera.position);
+    const minCameraHeight = terrainHeight + 2; // Устанавливаем минимальную высоту камеры над рельефом
+    if (camera.position.y < minCameraHeight) {
+        camera.position.y = minCameraHeight;  // Если камера ниже рельефа, поднимаем её
+    }
+
     controls.update();
     renderer.render(scene, camera);
     stats.end();
