@@ -6,7 +6,7 @@ import {renderer} from "../renderer.js";
 const distance = 400;
 const FOV = 2 * Math.atan(window.innerHeight / (2 * distance)) * (180 / Math.PI);
 export const camera = new THREE.PerspectiveCamera(FOV, window.innerWidth / window.innerHeight, 1, 20000);
-camera.position.set(-50, 10, 50);
+camera.position.set(-30, 10, 30);
 
 
 // Управление камерой

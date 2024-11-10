@@ -7,6 +7,7 @@ import {renderer} from "./renderer.js";
 import {ambientLight, centerLight} from "./setup/lights.js";
 import {ground} from "./objects/ground.js";
 import {grass, material} from "./objects/grass.js";
+import {snow, snowAnimation} from "./objects/snow.js";
 
 const scene = new THREE.Scene();
 
@@ -28,7 +29,10 @@ scene.add(ground);
 
 scene.add(grass);
 
+scene.add(snow);
+
 scene.add(camera);
+
 
 // Основной цикл рендера
 let time = 0;
@@ -36,6 +40,8 @@ const animate = () => {
     stats.begin();
     time += 0.01;
     material.uniforms.time.value = time;
+
+    snowAnimation();
 
     cameraCorrection();
 
