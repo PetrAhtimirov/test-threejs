@@ -4,11 +4,12 @@ import {controls} from "./setup/camera.js";
 import {stats} from "./setup/stats.js";
 import {camera, cameraCorrection} from "./setup/camera.js";
 import {renderer} from "./renderer.js";
-import {ambientLight, centerLight} from "./setup/lights.js";
+import {initLight} from "./setup/lights.js";
 import {ground} from "./objects/ground.js";
 import {grass, material} from "./objects/grass.js";
 import {snow, snowAnimation} from "./objects/snow.js";
 import {setupMenu} from "./setup/menu.js";
+import {initTemple} from "./objects/temple.js";
 
 export const scene = new THREE.Scene();
 
@@ -18,11 +19,9 @@ window.addEventListener('resize', () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
-scene.add(centerLight);
-scene.add(ambientLight);
-
 // Панель статистики
 
+initLight();
 
 scene.add(ground);
 
@@ -32,6 +31,7 @@ scene.add(snow);
 
 scene.add(camera);
 
+initTemple();
 
 // Основной цикл рендера
 let time = 0;

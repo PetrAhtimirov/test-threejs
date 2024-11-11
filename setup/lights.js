@@ -1,9 +1,21 @@
-import {AmbientLight, PointLight} from "three";
+import {AmbientLight, PointLight, DirectionalLight} from "three";
+import {scene} from "../main.js";
 
-export const centerLight = new PointLight(0xffffff, 2, 100, 2);
-centerLight.position.set(0, 10, 0);
+const centerLight = new PointLight(0xe3905f, 2, 25, 0.7);
+centerLight.position.set(15, 20, 15);
 centerLight.castShadow = true;  // Включаем тени для этого света
-centerLight.intensity = 3;
+centerLight.intensity = 100;
+
+const directionalLight = new DirectionalLight(0xffffff, 0.5);
+directionalLight.position.set(-15, 20, -15); // Устанавливаем позицию света
+directionalLight.target.position.set(0, 0, 0); // Устанавливаем цель света
+
 
 // Дополнительное освещение
-export const ambientLight = new AmbientLight(0x222222, 1); // Темный фоновый свет
+const ambientLight = new AmbientLight(0x222222, 1); // Темный фоновый свет
+
+export const initLight = () => {
+    scene.add(centerLight);
+    scene.add(ambientLight);
+    scene.add(directionalLight);
+}
