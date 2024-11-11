@@ -1,7 +1,7 @@
 import './style.css';
 import * as THREE from 'three';
 import {controls} from "./setup/camera.js";
-import Stats from 'stats.js';
+import {stats} from "./setup/stats.js";
 import {camera, cameraCorrection} from "./setup/camera.js";
 import {renderer} from "./renderer.js";
 import {ambientLight, centerLight} from "./setup/lights.js";
@@ -22,9 +22,7 @@ scene.add(centerLight);
 scene.add(ambientLight);
 
 // Панель статистики
-const stats = new Stats();
-stats.showPanel(0);
-document.body.appendChild(stats.dom);
+
 
 scene.add(ground);
 
