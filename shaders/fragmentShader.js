@@ -8,7 +8,7 @@ export const fragmentSource = `
     vec4 texColor = texture2D(map, vUv);
     // Умножаем текстуру на темный оттенок
     texColor.rgb *= 0.1;
-    texColor.rgb += vec3(0.0, 0.1, 0.0);
+    texColor.rgb += vec3(0.0, 0.08, 0.0);
     
 
     float alpha = texture2D(alphaMap, vUv).a;

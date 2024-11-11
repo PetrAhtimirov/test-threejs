@@ -1,7 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
 body {
+  font-family: "Geist", sans-serif;
   margin: 0;
   overflow: hidden;
+  color: #fff;
 }
 canvas {
   display: block;
+}
+
+.menu_button {
+  position: fixed;
+  z-index: 2;
+  top: 10px;
+  right: 10px;
+  padding: 2px 4px 0 4px;
+  background-color: rgba(233, 233, 233, 0.2);
+  border: 1px solid rgba(233, 233, 233, 0.4);
+  cursor: pointer;
+}
+
+.menu_container {
+  position: fixed;
+  z-index: 2;
+  top: 50px;
+  right: 10px;
+  background-color: rgba(233, 233, 233, 0.2);
+  border: 1px solid rgba(233, 233, 233, 0.4);
+  padding: 8px;
+}
+
+.d-none {
+  display: none;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 30px;
+  height: 16px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 8px;
+  width: 8px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #222222;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #222222;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(14px);
+  -ms-transform: translateX(14px);
+  transform: translateX(14px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.switch_wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }

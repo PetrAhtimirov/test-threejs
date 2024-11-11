@@ -8,8 +8,9 @@ import {ambientLight, centerLight} from "./setup/lights.js";
 import {ground} from "./objects/ground.js";
 import {grass, material} from "./objects/grass.js";
 import {snow, snowAnimation} from "./objects/snow.js";
+import {setupMenu} from "./setup/menu.js";
 
-const scene = new THREE.Scene();
+export const scene = new THREE.Scene();
 
 window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
@@ -53,3 +54,4 @@ const animate = () => {
 };
 
 animate();
+setupMenu();

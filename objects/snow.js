@@ -31,7 +31,7 @@ export const snowAnimation = () => {
     const positions = snowGeometry.attributes.position.array;
     for (let i = 1; i < positions.length; i += 3) {
         positions[i] -= snowSpeed; // Опускаем снежинку по Y
-        if (positions[i] < 0) positions[i] = 10; // Сбрасываем снежинку наверх, если она достигла земли
+        if (positions[i] < 0) positions[i] = 100; // Сбрасываем снежинку наверх, если она достигла земли
     }
     snowGeometry.attributes.position.needsUpdate = true;
 }
