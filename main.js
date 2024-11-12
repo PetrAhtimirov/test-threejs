@@ -12,6 +12,13 @@ import {setupMenu} from "./setup/menu.js";
 import {initTemple} from "./objects/temple.js";
 import {Fog} from "three";
 import {getBackgroundColor} from "./objects/daynight.js";
+
+window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
 export const scene = new THREE.Scene();
 scene.fog = new Fog(getBackgroundColor(), 24, 100);
 
@@ -24,13 +31,9 @@ window.addEventListener('resize', () => {
 initLight();
 
 scene.add(ground);
-
 scene.add(grass);
-
 scene.add(snow);
-
 scene.add(camera);
-
 initTemple();
 
 // Основной цикл рендера
@@ -39,17 +42,15 @@ const animate = () => {
     stats.begin();
     time += 0.01;
     material.uniforms.time.value = time;
-
     snowAnimation();
-
     cameraCorrection();
-
     controls.update();
     renderer.render(scene, camera);
     stats.end();
-
     requestAnimationFrame(animate);
 };
 
-animate();
 setupMenu();
+
+// Запуск анимации сразу
+animate();

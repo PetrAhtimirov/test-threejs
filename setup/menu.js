@@ -1,8 +1,9 @@
-import {scene} from "../main.js";
-import {snow} from "../objects/snow.js";
-import {Fog} from "three";
-import {getBackgroundColor, setBackgroundColor} from "../objects/daynight.js";
-import {material} from "../objects/grass.js";
+import { scene } from "../main.js";
+import { snow } from "../objects/snow.js";
+import { Fog } from "three";
+import { getBackgroundColor, setBackgroundColor } from "../objects/daynight.js";
+import { setLightColor } from "../objects/grass.js";
+import { setDayLight, setNightLight } from "./lights.js";
 
 export const setupMenu = () => {
     const menuButton = document.querySelector(".menu_button");
@@ -26,13 +27,8 @@ export const setupMenu = () => {
     fogToggle.addEventListener("click", () => {
         if (fogInput.checked) {
             scene.fog = new Fog(getBackgroundColor(), 24, 100);
-            material.uniforms.fogColor.value.set(getBackgroundColor());
-            material.uniforms.fogNear.value = 24;
-            material.uniforms.fogFar.value = 100;
         } else {
             scene.fog = null;
-            material.uniforms.fogNear.value = Infinity;
-            material.uniforms.fogFar.value = Infinity;
         }
     });
 
@@ -41,8 +37,12 @@ export const setupMenu = () => {
     daynightToggle.addEventListener("click", () => {
         if (daynightInput.checked) {
             setBackgroundColor(0x010017);
+            setNightLight();
+            setLightColor(true);  // Ночной свет
         } else {
             setBackgroundColor(0xDCDCDC);
+            setDayLight();
+            setLightColor(false);  // Дневной свет
         }
     });
 }

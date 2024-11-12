@@ -7,13 +7,16 @@ import textureFilePath from '../models/japanese_temple/Japanese_Temple_Paint2_Ja
 import objFilePath from '../models/japanese_temple/Japanese_Temple.obj';
 
 export const initTemple = () => {
+    // Инициализация TextureLoader без loadingManager
     const textureLoader = new TextureLoader();
     const texture = textureLoader.load(textureFilePath);
 
+    // Инициализация MTLLoader и OBJLoader без loadingManager
     const mtlLoader = new MTLLoader();
     mtlLoader.load(mtlFilePath, function (materials) {
         materials.preload();
 
+        // Применение текстуры к материалам
         for (const materialName in materials.materials) {
             const material = materials.materials[materialName];
             material.map = texture;
@@ -36,6 +39,8 @@ export const initTemple = () => {
                     child.receiveShadow = true;
                 }
             });
+
+            // Добавляем объект в сцену после загрузки
             scene.add(object);
         });
     });

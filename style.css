@@ -5,6 +5,7 @@ body {
   margin: 0;
   overflow: hidden;
   color: #fff;
+  background-color: #1e1e1e;
 }
 canvas {
   display: block;
@@ -108,4 +109,22 @@ input:checked + .slider:before {
   position: fixed;
   bottom: 10px;
   right: 10px;
+}
+
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+}
+
+.loader-text {
+  color: #fff;
+  font-size: 24px;
 }

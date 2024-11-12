@@ -33,9 +33,8 @@ export const getYPosition = (x, z) => {
 // Ландшафт
 const groundGeometry = new PlaneGeometry(width, width, 32, 32);
 groundGeometry.rotateX(-Math.PI / 2);
-const groundMaterial = new MeshPhongMaterial({ color: 0x0F4D0F });
+const groundMaterial = new MeshPhongMaterial({ color: 0x223622 });
 export const ground = new Mesh(groundGeometry, groundMaterial);
-ground.castShadow = true;  // Отбрасывает тени
 ground.receiveShadow = true;  // Принимает тени
 
 groundGeometry.attributes.position.array.forEach((_, i) => {
