@@ -2,15 +2,14 @@ import {
     PlaneGeometry,
     InstancedBufferGeometry,
     InstancedBufferAttribute,
-    TextureLoader,
-    LinearMipMapLinearFilter,
-    LinearFilter,
     RawShaderMaterial,
-    Vector2,
     DoubleSide,
     Quaternion,
     Euler,
-    Mesh
+    Mesh,
+    Vector2,
+    Vector3,
+    Color
 } from "three";
 import {joints, instances, width, h_} from "../setup/config.js";
 import {getYPosition} from "./ground.js";
@@ -19,7 +18,7 @@ import {fragmentSource} from "../shaders/fragmentShader.js";
 
 // Параметры травинок
 const bladeWidth = 0.17;
-const bladeHeight = h_ * 1.5; // Увеличиваем высоту
+const bladeHeight = h_ * 1.5;
 
 const baseGeometry = new PlaneGeometry(bladeWidth, bladeHeight, 1, joints);
 baseGeometry.translate(0, bladeHeight / 2, 0);
@@ -40,7 +39,7 @@ instancedGeometry.index = baseGeometry.index;
 instancedGeometry.attributes.position = baseGeometry.attributes.position;
 instancedGeometry.attributes.uv = baseGeometry.attributes.uv;
 
-const offsets = [], orientations = [], stretches = [];
+const offsets = [], orientations = [], stretches = [], colors = [];
 for (let i = 0; i < instances; i++) {
     const x = Math.random() * width - width / 2;
     const z = Math.random() * width - width / 2;
@@ -55,33 +54,25 @@ for (let i = 0; i < instances; i++) {
     quaternion.setFromEuler(new Euler(0, angleY, 0));
 
     orientations.push(quaternion.x, quaternion.y, quaternion.z, quaternion.w);
+
+    // Добавляем случайный зелёный цвет для каждой травинки
+    const greenShade = 0.5 + Math.random() * 0.5;  // Значения от 0.5 до 1.0 для оттенка зелёного
+    colors.push(0, greenShade, 0);  // Красный = 0, зелёный варьируется, синий = 0
 }
 
 // Добавляем атрибуты инстанса
 instancedGeometry.setAttribute('offset', new InstancedBufferAttribute(new Float32Array(offsets), 3));
 instancedGeometry.setAttribute('orientation', new InstancedBufferAttribute(new Float32Array(orientations), 4));
 instancedGeometry.setAttribute('stretch', new InstancedBufferAttribute(new Float32Array(stretches), 1));
-
-// Текстуры
-const textureLoader = new TextureLoader();
-const texture = textureLoader.load("https://res.cloudinary.com/al-ro/image/upload/v1552838655/v2_iqvzcx.png");
-const alphaMap = textureLoader.load("https://res.cloudinary.com/al-ro/image/upload/v1552834315/Screen_Shot_2019-03-17_at_15.50.35_y5zfyu.png");
-
-texture.generateMipmaps = true;
-texture.minFilter = LinearMipMapLinearFilter;
-texture.magFilter = LinearFilter;
-
-alphaMap.generateMipmaps = true;
-alphaMap.minFilter = LinearMipMapLinearFilter;
-alphaMap.magFilter = LinearFilter;
+instancedGeometry.setAttribute('color', new InstancedBufferAttribute(new Float32Array(colors), 3)); // Атрибут цвета
 
 export const material = new RawShaderMaterial({
     uniforms: {
-        map: {value: texture},
-        alphaMap: {value: alphaMap},
         time: {value: 0},
-        windStrength: {value: 1.0}, // Уменьшили силу ветра
-        windDirection: {value: new Vector2(1, 0)}
+        windStrength: {value: 1.0},
+        windDirection: {value: new Vector2(1, 0)},
+        lightDirection: {value: new Vector3(0.5, 1.0, 0.5).normalize()}, // Направление света
+        lightColor: {value: new Color(0.1, 0.1, 0.1)}, // Цвет света
     },
     vertexShader: vertexSource,
     fragmentShader: fragmentSource,
@@ -90,5 +81,5 @@ export const material = new RawShaderMaterial({
 
 // Создаем меш с инстансами травинок
 export const grass = new Mesh(instancedGeometry, material);
-grass.castShadow = true;  // Травинки отбрасывают тени
-grass.receiveShadow = true;  // Травинки могут принимать тени
+grass.castShadow = true;
+grass.receiveShadow = true;

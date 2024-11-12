@@ -1,6 +1,6 @@
 export const vertexSource = `
     precision highp float;
-    attribute vec3 position, offset;
+    attribute vec3 position, offset, color;
     attribute vec2 uv;
     attribute float stretch;
     attribute vec4 orientation;
@@ -8,13 +8,17 @@ export const vertexSource = `
     uniform float time;
     uniform float windStrength;
     uniform vec2 windDirection;
+    uniform vec3 lightDirection; // Направление света
     varying float vStretch;
     varying vec2 vUv;
-
+    varying vec3 vColor;
+    varying vec3 vNormal; // Нормаль для освещения
+    
     void main() {
         vUv = uv;
         vStretch = stretch;
-
+        vColor = color;
+    
         // Вращение травинки
         vec3 pos = position;
         float angle = 2.0 * acos(orientation.w);
@@ -39,13 +43,17 @@ export const vertexSource = `
         );
         
         pos = (rotationMatrix * vec4(pos, 1.0)).xyz;
-
-        // Эффект ветра, ослабленный для уменьшения наклона
-        float windEffect = sin((offset.x + offset.z) * 0.1 + time * windStrength) * windStrength * 0.3; // Ослабленный эффект ветра
-        float influence = position.y; // Увеличение влияния ветра к верхушке
+    
+        // Учитываем нормаль для освещения
+        vec3 normal = normalize(rotationMatrix * vec4(0.0, 1.0, 0.0, 0.0)).xyz;
+        vNormal = normal; // Передаем нормаль во фрагментный шейдер
+    
+        // Эффект ветра
+        float windEffect = sin((offset.x + offset.z) * 0.1 + time * windStrength) * windStrength * 0.3;
+        float influence = position.y;
         pos.x += windEffect * windDirection.x * influence;
         pos.z += windEffect * windDirection.y * influence;
-
+    
         pos.y *= stretch;
         pos += offset;
         gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);

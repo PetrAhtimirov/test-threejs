@@ -1,18 +1,28 @@
 export const fragmentSource = `
     precision highp float;
-    uniform sampler2D map, alphaMap;
+    uniform vec3 lightDirection; // Направление света
+    uniform vec3 lightColor; // Цвет света
     varying vec2 vUv;
     varying float vStretch;
-
-    void main() {
-    vec4 texColor = texture2D(map, vUv);
-    // Умножаем текстуру на темный оттенок
-    texColor.rgb *= 0.1;
-    texColor.rgb += vec3(0.0, 0.08, 0.0);
+    varying vec3 vColor;
+    varying vec3 vNormal;
     
-
-    float alpha = texture2D(alphaMap, vUv).a;
-    gl_FragColor = texColor;
-    gl_FragColor.a *= alpha * vStretch;
-}
+    void main() {
+        // Нормализуем нормаль и направление света
+        vec3 normal = normalize(vNormal);
+        vec3 lightDir = normalize(lightDirection);
+    
+        // Расчет затенения на основе косинуса угла между нормалью и направлением света
+        float diff = max(dot(normal, lightDir), 0.0);
+    
+        // Базовый цвет травы
+        vec3 color = vColor * 0.4 + vec3(0.0, 0.5, 0.0); // Темный зеленый оттенок
+        
+        // Освещенность
+        vec3 litColor = color * (0.3 + 0.7 * diff) * lightColor;
+    
+        // Устанавливаем конечный цвет
+        gl_FragColor = vec4(litColor, 1.0);
+        gl_FragColor.a *= vStretch;
+    }
 `;
