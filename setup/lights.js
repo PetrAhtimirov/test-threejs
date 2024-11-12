@@ -13,6 +13,18 @@ centerLight3.position.set(-10, 14, 10);
 const centerLight4 = new PointLight(0xe3905f, 100, 14, 1);
 centerLight4.position.set(10, 14, -10);
 
+const centerLight5 = new PointLight(0xe3905f, 30, 12, 1);
+centerLight5.position.set(6, 26, 6);
+
+const centerLight6 = new PointLight(0xe3905f, 30, 12, 1);
+centerLight6.position.set(-6, 26, -6);
+
+const centerLight7 = new PointLight(0xe3905f, 30, 12, 1);
+centerLight7.position.set(-6, 26, 6);
+
+const centerLight8 = new PointLight(0xe3905f, 30, 12, 1);
+centerLight8.position.set(6, 26, -6);
+
 const ambientLight = new AmbientLight(0x222222, 1);
 
 const directionalLight1 = new DirectionalLight(0xffffff, 0.2);
@@ -30,6 +42,10 @@ export const initLight = () => {
     scene.add(centerLight2);
     scene.add(centerLight3);
     scene.add(centerLight4);
+    scene.add(centerLight5);
+    scene.add(centerLight6);
+    scene.add(centerLight7);
+    scene.add(centerLight8);
     scene.add(ambientLight);
     scene.add(directionalLight1);
     scene.add(directionalLight2);
