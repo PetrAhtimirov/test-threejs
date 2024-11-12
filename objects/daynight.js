@@ -1,5 +1,5 @@
 import { scene } from "../main.js";
-import { renderer } from "../renderer.js";
+import { renderer } from "../setup/renderer.js";
 import { material } from "./grass.js";
 import { Color } from "three";
 

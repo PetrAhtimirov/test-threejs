@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import {getYPosition} from "../objects/ground.js";
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import {renderer} from "../renderer.js";
+import {renderer} from "./renderer.js";
 
 const distance = 400;
 const FOV = 2 * Math.atan(window.innerHeight / (2 * distance)) * (180 / Math.PI);

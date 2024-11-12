@@ -3,14 +3,17 @@ import * as THREE from 'three';
 import {controls} from "./setup/camera.js";
 import {stats} from "./setup/stats.js";
 import {camera, cameraCorrection} from "./setup/camera.js";
-import {renderer} from "./renderer.js";
+import {renderer} from "./setup/renderer.js";
 import {initLight} from "./setup/lights.js";
 import {ground} from "./objects/ground.js";
 import {grass, material} from "./objects/grass.js";
 import {snow, snowAnimation} from "./objects/snow.js";
 import {setupMenu} from "./setup/menu.js";
 import {initTemple} from "./objects/temple.js";
+import {Fog} from "three";
+import {getBackgroundColor} from "./objects/daynight.js";
 export const scene = new THREE.Scene();
+scene.fog = new Fog(getBackgroundColor(), 24, 100);
 
 window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;

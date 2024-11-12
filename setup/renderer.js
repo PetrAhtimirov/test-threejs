@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { getBackgroundColor } from "./objects/daynight.js";
+import { getBackgroundColor } from "../objects/daynight.js";
 
 const canvas = document.querySelector("canvas");
 export const renderer = new THREE.WebGLRenderer({ antialias: true, canvas });
