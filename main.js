@@ -10,7 +10,6 @@ import {grass, material} from "./objects/grass.js";
 import {snow, snowAnimation} from "./objects/snow.js";
 import {setupMenu} from "./setup/menu.js";
 import {initTemple} from "./objects/temple.js";
-
 export const scene = new THREE.Scene();
 
 window.addEventListener('resize', () => {
@@ -18,13 +17,6 @@ window.addEventListener('resize', () => {
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
 });
-
-// Добавляем туман к сцене (используем серый цвет)
-const fogColor = 0x00002b; // Цвет тумана (можно выбрать любой цвет)
-scene.fog = new THREE.Fog(fogColor, 12, 100); // Задаём цвет, минимальную и максимальную дальность тумана
-
-
-// Панель статистики
 
 initLight();
 
