@@ -5,14 +5,13 @@ import { scene } from "../main.js";
 import mtlFilePath from '../models/japanese_temple/Japanese_Temple.mtl';
 import textureFilePath from '../models/japanese_temple/Japanese_Temple_Paint2_Japanese_Shrine_Mat_AlbedoTransparency.png';
 import objFilePath from '../models/japanese_temple/Japanese_Temple.obj';
+import {loadingManager} from "../main.js";
 
 export const initTemple = () => {
-    // Инициализация TextureLoader без loadingManager
-    const textureLoader = new TextureLoader();
+    const textureLoader = new TextureLoader(loadingManager);
     const texture = textureLoader.load(textureFilePath);
 
-    // Инициализация MTLLoader и OBJLoader без loadingManager
-    const mtlLoader = new MTLLoader();
+    const mtlLoader = new MTLLoader(loadingManager);
     mtlLoader.load(mtlFilePath, function (materials) {
         materials.preload();
 

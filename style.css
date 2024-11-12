@@ -111,20 +111,51 @@ input:checked + .slider:before {
   right: 10px;
 }
 
-.loader {
+.loader_wrapper {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: #000;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
   display: flex;
-  align-items: center;
   justify-content: center;
-  z-index: 3;
+  align-items: center;
+  color: white;
+  font-size: 2em;
+  z-index: 1000;
+  transition: opacity 0.8s linear;
 }
 
-.loader-text {
-  color: #fff;
-  font-size: 24px;
+.loader_wrapper.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loader_content {
+  font-size: 2em;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  align-items: center;
+}
+
+.loader {
+  width: 2em;
+  height: 2em;
+  border: 3px solid #FFF;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

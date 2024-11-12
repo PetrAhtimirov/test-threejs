@@ -13,6 +13,22 @@ import {initTemple} from "./objects/temple.js";
 import {Fog} from "three";
 import {getBackgroundColor} from "./objects/daynight.js";
 
+const loaderElement = document.querySelector('.loader_wrapper');
+
+// Создаем менеджер загрузки
+export const loadingManager = new THREE.LoadingManager(
+    () => {
+        // Добавляем класс "hidden" для плавного исчезновения
+        loaderElement.classList.add('hidden');
+        // Ждем завершения анимации перед началом рендера
+        animate();
+    },
+    (url, itemsLoaded, itemsTotal) => {
+    },
+    (url) => {
+        console.error(`Ошибка загрузки: ${url}`);
+    }
+);
 window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
@@ -51,6 +67,3 @@ const animate = () => {
 };
 
 setupMenu();
-
-// Запуск анимации сразу
-animate();
