@@ -1,8 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 body {
-  font-family: "Geist", sans-serif;
+  font-family: "Playfair Display", serif;
+  letter-spacing: 4px;
   margin: 0;
   overflow: hidden;
   color: #fff;
@@ -30,7 +29,7 @@ canvas {
   right: 10px;
   background-color: rgba(233, 233, 233, 0.2);
   border: 1px solid rgba(233, 233, 233, 0.4);
-  padding: 8px;
+  padding: 8px 12px;
   display: flex;
   flex-direction: column;
   gap: 6px;
