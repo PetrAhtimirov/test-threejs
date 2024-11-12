@@ -19,6 +19,11 @@ window.addEventListener('resize', () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
+// Добавляем туман к сцене (используем серый цвет)
+const fogColor = 0x00002b; // Цвет тумана (можно выбрать любой цвет)
+scene.fog = new THREE.Fog(fogColor, 12, 100); // Задаём цвет, минимальную и максимальную дальность тумана
+
+
 // Панель статистики
 
 initLight();
